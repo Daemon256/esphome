@@ -70,7 +70,7 @@ void TFMiniSensor::loop() {
 
     // Only publish valid readings
     if (strength < 10) {
-     // ESP_LOGW(TAG, "TFMini signal strength too low: %u", strength);
+      ESP_LOGW(TAG, "TFMini signal strength too low: %u", strength);
       continue;
     }
 
@@ -87,15 +87,15 @@ void TFMiniSensor::loop() {
     }
 
     // Publish all values
-    this->publish_state(distance_value);
+ //   this->publish_state(distance_value);
     
-    if (this->strength_sensor_ != nullptr) {
-      this->strength_sensor_->publish_state(strength);
-    }
+ //   if (this->strength_sensor_ != nullptr) {
+ //     this->strength_sensor_->publish_state(strength);
+  //  }
     
-    if (this->temperature_sensor_ != nullptr) {
-      this->temperature_sensor_->publish_state(temperature);
-    }
+  //  if (this->temperature_sensor_ != nullptr) {
+  //    this->temperature_sensor_->publish_state(temperature);
+  //  }
     
     return;
   }
