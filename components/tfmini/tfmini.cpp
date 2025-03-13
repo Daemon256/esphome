@@ -6,6 +6,7 @@ namespace tfmini {
 
 static const char *const TAG = "tfmini";
 static const uint8_t HEADER = 0x59;  // frame header of data package
+float t, old_t;
 
 void TFMiniSensor::setup() {
   this->set_timeout(50, [this]() { this->setup_internal_(); });
@@ -62,7 +63,7 @@ void TFMiniSensor::loop() {
     // Extract distance data (first two bytes)
     uint16_t distance_cm = data[0] | (data[1] << 8);
     uint16_t distance = data[0] + data[1] * 256; //calculate distance value
-    ESP_LOGW(TAG, "Distance:  %u", distance);
+    ESP_LOGW(TAG, "Distance old:  %u; Distance new:  %u", distance_cm);
     // Extract signal strength (next two bytes)
     uint16_t strength = data[2] | (data[3] << 8);
     // Extract temperature (next two bytes)
@@ -87,7 +88,21 @@ void TFMiniSensor::loop() {
     }
 
     // Publish all values
+ 
  //   this->publish_state(distance_value);
+
+ // Проверяем на изменение значения расстояния
+    t = distance_value;   
+    if (t != old_t)  
+           {
+           // Если расстояние изменилось значительно, то шлём данные
+           int abs_value = t - old_t; 
+           if (abs(abs_value) > 550)
+            {
+                this->publish_state(distance_value);
+              old_t = t;
+            }
+           }
     
  //   if (this->strength_sensor_ != nullptr) {
  //     this->strength_sensor_->publish_state(strength);
