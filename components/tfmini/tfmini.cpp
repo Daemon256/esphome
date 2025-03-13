@@ -61,6 +61,8 @@ void TFMiniSensor::loop() {
 
     // Extract distance data (first two bytes)
     uint16_t distance_cm = data[0] | (data[1] << 8);
+    float distance = data[0] + data[1] * 256; //calculate distance value
+    ESP_LOGW(TAG, "distance: %u", distance);
     // Extract signal strength (next two bytes)
     uint16_t strength = data[2] | (data[3] << 8);
     // Extract temperature (next two bytes)
