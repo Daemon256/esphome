@@ -9,7 +9,7 @@ static const uint8_t HEADER = 0x59;  // frame header of data package
 float t, old_t;
 
 void TFMiniSensor::setup() {
-  this->set_timeout(50, [this]() { this->setup_internal_(); });
+  this->set_timeout(10000, [this]() { this->setup_internal_(); });
 }
 
 void TFMiniSensor::setup_internal_() {
