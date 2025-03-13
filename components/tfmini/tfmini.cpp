@@ -63,7 +63,7 @@ void TFMiniSensor::loop() {
     // Extract distance data (first two bytes)
     uint16_t distance_cm = data[0] | (data[1] << 8);
     uint16_t distance = data[0] + data[1] * 256; //calculate distance value
-    ESP_LOGW(TAG, "Distance old:  %u; Distance new:  %u", distance_cm);
+    ESP_LOGW(TAG, "Distance old:  %u; Distance new:   %d cm", distance, distance_cm);
     // Extract signal strength (next two bytes)
     uint16_t strength = data[2] | (data[3] << 8);
     // Extract temperature (next two bytes)
@@ -92,14 +92,16 @@ void TFMiniSensor::loop() {
  //   this->publish_state(distance_value);
 
  // Проверяем на изменение значения расстояния
+    
     t = distance_value;   
+    if (t==0) t=12000
     if (t != old_t)  
            {
            // Если расстояние изменилось значительно, то шлём данные
            int abs_value = t - old_t; 
            if (abs(abs_value) > 550)
             {
-                this->publish_state(distance_value);
+                this->publish_state(t);
               old_t = t;
             }
            }
