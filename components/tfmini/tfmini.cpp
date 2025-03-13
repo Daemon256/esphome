@@ -67,7 +67,7 @@ void TFMiniSensor::loop() {
     float temperature = (data[4] | (data[5] << 8)) / 8.0f - 256.0f;
 
     // Only publish valid readings
-    if (strength < 100) {
+    if (strength < 10) {
       ESP_LOGW(TAG, "TFMini signal strength too low: %u", strength);
       continue;
     }
