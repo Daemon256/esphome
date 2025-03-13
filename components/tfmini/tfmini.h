@@ -12,9 +12,9 @@ enum DistanceUnit {
   METERS
 };
 
-class TFMiniSensor : public sensor::Sensor, public PollingComponent, public uart::UARTDevice {
+class TFMiniSensor : public sensor::Sensor, public Component, public uart::UARTDevice {
  public:
-  TFMiniSensor() : PollingComponent(10000) {}  // Обновление каждые 10 секунд
+//  TFMiniSensor() : PollingComponent(10000) {}  // Обновление каждые 10 секунд
   void setup() override;
   void loop() override;
   void dump_config() override;
