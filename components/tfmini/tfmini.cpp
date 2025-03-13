@@ -62,7 +62,7 @@ void TFMiniSensor::loop() {
     // Extract distance data (first two bytes)
     uint16_t distance_cm = data[0] | (data[1] << 8);
     float distance = data[0] + data[1] * 256; //calculate distance value
-    ESP_LOGW(TAG, "distance: %u", distance);
+    ESP_LOGW(TAG, "Distance: %.2f", distance);
     // Extract signal strength (next two bytes)
     uint16_t strength = data[2] | (data[3] << 8);
     // Extract temperature (next two bytes)
@@ -70,7 +70,7 @@ void TFMiniSensor::loop() {
 
     // Only publish valid readings
     if (strength < 10) {
-      ESP_LOGW(TAG, "TFMini signal strength too low: %u", strength);
+     // ESP_LOGW(TAG, "TFMini signal strength too low: %u", strength);
       continue;
     }
 
@@ -78,12 +78,12 @@ void TFMiniSensor::loop() {
     float distance_value;
     if (this->distance_unit_ == METERS) {
       distance_value = distance_cm / 100.0f;
-      ESP_LOGD(TAG, "Distance: %.2f m, Strength: %u, Temperature: %.1f °C", 
-               distance_value, strength, temperature);
+   //   ESP_LOGD(TAG, "Distance: %.2f m, Strength: %u, Temperature: %.1f °C", 
+       //        distance_value, strength, temperature);
     } else {
       distance_value = distance_cm;
-      ESP_LOGD(TAG, "Distance: %d cm, Strength: %u, Temperature: %.1f °C", 
-               distance_cm, strength, temperature);
+  //    ESP_LOGD(TAG, "Distance: %d cm, Strength: %u, Temperature: %.1f °C", 
+            //   distance_cm, strength, temperature);
     }
 
     // Publish all values
